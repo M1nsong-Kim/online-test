@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="goodee.gdj58.online.mapper.EmployeeMapper">
+	<update id="updateEmployeePw" parameterType="java.util.Map">
+		UPDATE employee 
+		SET emp_pw = PASSWORD(#{newPw})
+		WHERE emp_no = #{empNo} AND emp_pw = PASSWORD(#{oldPw}) 
+	</update>
+	
+	<select id="login" parameterType="goodee.gdj58.online.vo.Employee" resultType="goodee.gdj58.online.vo.Employee">
+		SELECT
+			emp_no empNo 
+			, emp_id empId
+			, emp_name empName
+		FROM employee
+		WHERE emp_id = #{empId} AND emp_pw = PASSWORD(#{empPw})
+	</select>
+
+	<delete id="deleteEmployee" parameterType="int">
+		DELETE FROM employee
+		WHERE emp_no = #{empNo}	<!-- parameter 1개 -> #{안에 아무거나 적어도 됨} -->
+	</delete>
+
+	<!-- resultType="Integer" 이런 식으로 적지 말기(오류남) -->
+	<insert id="insertEmployee" parameterType="goodee.gdj58.online.vo.Employee">
+		INSERT INTO employee (
+			emp_id
+			, emp_pw
+			, emp_name
+		) VALUES (
+			#{empId}
+			, PASSWORD(#{empPw})
+			, #{empName}
+		)
+	</insert>
+	
+	<!-- resultType엔 list가 아니라 list가 품고 있는 걸 적는다-->
+	<select id="selectEmployeeList" resultType="goodee.gdj58.online.vo.Employee" parameterType="java.util.Map">
+		SELECT
+			emp_no	empNo <!-- rs.getInt("emp_no"), new Employee().setEmp_no() 이렇게 vo와 불일치하는 경우 없도록 as 선언 -->
+			, emp_id empId
+			, emp_name empName
+		FROM employee
+		GROUP BY emp_no DESC
+		LIMIT #{beginRow}, #{rowPerPage}	<!-- parameterType의 map에서 하나씩 꺼내 넣기 -->
+	</select>
+</mapper>
