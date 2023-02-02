@@ -19,6 +19,9 @@ public class EmployeeService {
 	@Autowired	// bean 안에 employeeMapper 타입에 들어갈 수 있는 게 있는지 스캔 후 주입
 	private EmployeeMapper employeeMapper;
 
+	public int getEmpCount(String searchWord) {
+		return employeeMapper.selectEmpCount(searchWord);
+	}
 	
 	public int updateEmployeePw(int empNo, String oldPw, String newPw) {
 		Map<String, Object> paramMap = new HashMap<>();
@@ -40,12 +43,13 @@ public class EmployeeService {
 		return employeeMapper.insertEmployee(employee);
 	}
 	
-	public List<Employee> getEmployeeList(int currentPage, int rowPerPage){
+	public List<Employee> getEmployeeList(int currentPage, int rowPerPage, String searchWord){
 		// 인터페이스는 객체 생성 불가 -> 기존 방식대로 Mapper mapper = new Mapper(); 불가능 -> 위의 @Autowired
 		int beginRow = (currentPage-1)*rowPerPage;
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("beginRow", beginRow);
 		paramMap.put("rowPerPage", rowPerPage);
+		paramMap.put("searchWord", searchWord);
 		return employeeMapper.selectEmployeeList(paramMap);
 	}
 }

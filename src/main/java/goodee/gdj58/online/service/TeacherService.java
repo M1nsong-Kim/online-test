@@ -16,6 +16,11 @@ import goodee.gdj58.online.vo.Teacher;
 public class TeacherService {
 	@Autowired TeacherMapper teacherMapper;
 	
+	// 선생님 목록 총 개수
+	public int getTeacherCount(String searchWord) {
+		return teacherMapper.selectTeacherCount(searchWord);
+	}
+	
 	// 삭제
 	public int removeTeacher(int teacherNo) {
 		return teacherMapper.deleteTeacher(teacherNo);
@@ -27,11 +32,12 @@ public class TeacherService {
 	}
 	
 	// 목록
-	public List<Teacher> getTeacherList(int currentPage, int rowPerPage){
+	public List<Teacher> getTeacherList(int currentPage, int rowPerPage, String searchWord){
 		int beginRow = (currentPage-1)*rowPerPage;
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("beginRow", beginRow);
 		paramMap.put("rowPerPage", rowPerPage);
+		paramMap.put("searchWord", searchWord);
 		return teacherMapper.selectTeacherList(paramMap);
 	}
 }

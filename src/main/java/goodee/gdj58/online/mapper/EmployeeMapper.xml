@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="goodee.gdj58.online.mapper.EmployeeMapper">
+	<!-- 사원 목록 총 개수 -->
+	<select id="selectEmpCount" resultType="int">
+		SELECT COUNT(*)
+		FROM employee
+		<where>
+			<if test="searchWord != null || !searchWord.equals('')">
+				emp_name LIKE CONCAT('%', #{searchWord}, '%')
+			</if>
+		</where>
+	</select>
+
 	<update id="updateEmployeePw" parameterType="java.util.Map">
 		UPDATE employee 
 		SET emp_pw = PASSWORD(#{newPw})
@@ -41,7 +52,12 @@
 			, emp_id empId
 			, emp_name empName
 		FROM employee
-		GROUP BY emp_no DESC
+		<where>
+			<if test="searchWord != null || !searchWord.equals('')">
+				emp_name LIKE CONCAT('%', #{searchWord}, '%')
+			</if>
+		</where>
+		ORDER BY emp_no DESC
 		LIMIT #{beginRow}, #{rowPerPage}	<!-- parameterType의 map에서 하나씩 꺼내 넣기 -->
 	</select>
 </mapper>

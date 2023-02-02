@@ -22,22 +22,14 @@ public class EmployeeController {
 	@Autowired IdService idService;
 	
 	// 로그인
-	@GetMapping("/employee/loginEmp")
-	// 스프링 철학엔 안 맞지만 servlet API 그대로 사용
-	public String loginEmp(HttpSession session) {
-		// 이미 로그인 중이라면 직원 목록으로
-		Employee loginEmp = (Employee)session.getAttribute("loginEmp");
-		if(loginEmp != null) { 
-			return "redirect:/employee/empList";
-		}
+	@GetMapping("/loginEmp")
+	public String loginEmp() {
+		// 로그인한 상태는 뷰에서 분기
 		return "employee/loginEmp";
 	}
-	@PostMapping("/employee/loginEmp")
+	@PostMapping("/loginEmp")
 	public String loginEmp(HttpSession session, Employee emp) {
 		Employee resultEmp = employeeService.login(emp);
-		if(resultEmp == null) {	// 로그인 실패
-			return "redirect:/employee/loginEmp";
-		}
 		session.setAttribute("loginEmp", resultEmp);
 		return "redirect:/employee/empList";	// sendRedirect, CM -> C
 	}
@@ -46,62 +38,37 @@ public class EmployeeController {
 	@GetMapping("/employee/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/employee/loginEmp";
+		return "redirect:/loginEmp";
 	}
 	
 	// 로그인 후에 사용한 기능
 	
 	// pw 수정
 	@GetMapping("/employee/modifyEmpPw")
-	public String modifyEmpPw(HttpSession session) {
-		// 로그인 x -> 로그인 폼으로
-		Employee loginEmp = (Employee)session.getAttribute("loginEmp");
-		if(loginEmp == null) { 
-			return "redirect:/employee/loginEmp";
-		}
+	public String modifyEmpPw() {
 		return "employee/modifyEmpPw";
 	}
 	@PostMapping("/employee/modifyEmpPw")
 	public String modifyEmpPw(HttpSession session, @RequestParam("oldPw") String oldPw, @RequestParam("newPw") String newPw) {
-		// 로그인 x -> 로그인 폼으로
 		Employee loginEmp = (Employee)session.getAttribute("loginEmp");
-		if(loginEmp == null) { 
-			return "redirect:/employee/loginEmp";
-		}
 		employeeService.updateEmployeePw(loginEmp.getEmpNo(), oldPw, newPw);
 		return "redirect:/employee/loginEmp";
 	}
 	
 	// 삭제
 	@GetMapping("/employee/removeEmp")
-	public String removeEmp(HttpSession session, @RequestParam("empNo") int empNo) {
-		// 로그인 x -> 로그인 폼으로
-		Employee loginEmp = (Employee)session.getAttribute("loginEmp");
-		if(loginEmp == null) { 
-			return "redirect:/employee/loginEmp";
-		}
+	public String removeEmp(@RequestParam("empNo") int empNo) {
 		employeeService.removeEmployee(empNo);
 		return "redirect:/employee/empList";
 	}
 	
 	// 등록
 	@GetMapping("/employee/addEmp")
-	public String addEmp(HttpSession session) {
-		// 로그인 x -> 로그인 폼으로
-		Employee loginEmp = (Employee)session.getAttribute("loginEmp");
-		if(loginEmp == null) { 
-			return "redirect:/employee/loginEmp";
-		}
+	public String addEmp() {
 		return "employee/addEmp";
 	}
 	@PostMapping("/employee/addEmp")
-	public String addEmp(HttpSession session, Model model, Employee employee) {
-		// 로그인 x -> 로그인 폼으로
-		Employee loginEmp = (Employee)session.getAttribute("loginEmp");
-		if(loginEmp == null) { 
-			return "redirect:/employee/loginEmp";
-		}
-		
+	public String addEmp(Model model, Employee employee) {
 		String idCheck = idService.getIdCheck(employee.getEmpId());
 		if(idCheck != null) {
 			model.addAttribute("errorMsg", "중복 ID");	// 메서드의 매개변수에 model을 추가하고 attribute에 넣는다
@@ -118,17 +85,23 @@ public class EmployeeController {
 	
 	// 목록
 	@GetMapping("/employee/empList")
-	public String empList(HttpSession session, Model model, @RequestParam(value="currentPage", defaultValue="1") int currentPage, @RequestParam(value="rowPerPage", defaultValue="10") int rowPerPage) {
+	public String empList(Model model, @RequestParam(value="currentPage", defaultValue="1") int currentPage, @RequestParam(value="rowPerPage", defaultValue="10") int rowPerPage, @RequestParam(value="searchWord", defaultValue="") String searchWord) {
 										// Integer.parseInt(), currentPage==null... 얘가 해줌
-		// 로그인 x -> 로그인 폼으로
-		Employee loginEmp = (Employee)session.getAttribute("loginEmp");
-		if(loginEmp == null) { 
-			return "redirect:/employee/loginEmp";
+		List<Employee> list = employeeService.getEmployeeList(currentPage, rowPerPage, searchWord);
+		int startPage = ((currentPage-1)/rowPerPage)*rowPerPage+1;	// 한 페이지당 출력 개수와 페이지 수는 동일하다고 설정
+		int endPage = startPage + rowPerPage - 1;	// 1~10페이지 목록일 때 10
+		int lastPage = (int)Math.ceil(employeeService.getEmpCount(searchWord)/(double)rowPerPage);	// 가장 끝쪽
+		if(endPage > lastPage){	//마지막 페이지보다 더 큰 숫자의 페이지 존재하지 않도록
+			endPage = lastPage;
 		}
-		List<Employee> list = employeeService.getEmployeeList(currentPage, rowPerPage);
+		
 		// request.setAttribute("list", list);
 		model.addAttribute("list", list);	// 위와 동일한 역할을 할 뿐 같은 건 아님
 		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("searchWord", searchWord);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
+		model.addAttribute("lastPage", lastPage);
 		return "employee/empList";
 	}
 }
