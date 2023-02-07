@@ -15,7 +15,21 @@ import goodee.gdj58.online.vo.Student;
 @Transactional
 public class StudentService {
 	@Autowired StudentMapper studentMapper;
-	
+	// 1. 학생 기능
+	// 로그인
+	public Student login(Student student) {
+		return studentMapper.login(student);
+	}
+	// 비밀번호 변경
+	public int modifyStudentPw(int studentNo, String oldPw, String newPw) {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("studentNo", studentNo);
+		paramMap.put("oldPw", oldPw);
+		paramMap.put("newPw", newPw);
+		return studentMapper.updateStudentPw(paramMap);
+	}
+		
+	// 2. 직원이 학생 기능
 	// 학생 목록 총 개수
 	public int getStudentCount(String searchWord) {
 		return studentMapper.selectStudentCount(searchWord);

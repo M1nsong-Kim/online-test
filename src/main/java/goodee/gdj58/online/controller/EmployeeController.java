@@ -51,8 +51,8 @@ public class EmployeeController {
 	@PostMapping("/employee/modifyEmpPw")
 	public String modifyEmpPw(HttpSession session, @RequestParam("oldPw") String oldPw, @RequestParam("newPw") String newPw) {
 		Employee loginEmp = (Employee)session.getAttribute("loginEmp");
-		employeeService.updateEmployeePw(loginEmp.getEmpNo(), oldPw, newPw);
-		return "redirect:/employee/loginEmp";
+		employeeService.modifyEmployeePw(loginEmp.getEmpNo(), oldPw, newPw);
+		return "redirect:/loginEmp";
 	}
 	
 	// 삭제

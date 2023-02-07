@@ -23,7 +23,7 @@ public class EmployeeService {
 		return employeeMapper.selectEmpCount(searchWord);
 	}
 	
-	public int updateEmployeePw(int empNo, String oldPw, String newPw) {
+	public int modifyEmployeePw(int empNo, String oldPw, String newPw) {
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("empNo", empNo);
 		paramMap.put("oldPw", oldPw);

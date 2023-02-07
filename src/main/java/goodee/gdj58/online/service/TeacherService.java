@@ -16,21 +16,33 @@ import goodee.gdj58.online.vo.Teacher;
 public class TeacherService {
 	@Autowired TeacherMapper teacherMapper;
 	
+	// 1. 선생님 기능
+	// 로그인
+	public Teacher login(Teacher teacher) {
+		return teacherMapper.login(teacher);
+	}
+	// 비밀번호 변경
+	public int modifyTeacherPw(int teacherNo, String oldPw, String newPw) {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("teacherNo", teacherNo);
+		paramMap.put("oldPw", oldPw);
+		paramMap.put("newPw", newPw);
+		return teacherMapper.updateTeacherPw(paramMap);
+	}
+	
+	// 2. 직원의 선생님 기능
 	// 선생님 목록 총 개수
 	public int getTeacherCount(String searchWord) {
 		return teacherMapper.selectTeacherCount(searchWord);
 	}
-	
-	// 삭제
+	//삭제
 	public int removeTeacher(int teacherNo) {
 		return teacherMapper.deleteTeacher(teacherNo);
 	}
-	
 	// 등록
 	public int addTeacher(Teacher teacher) {
 		return teacherMapper.insertTeacher(teacher);
 	}
-	
 	// 목록
 	public List<Teacher> getTeacherList(int currentPage, int rowPerPage, String searchWord){
 		int beginRow = (currentPage-1)*rowPerPage;

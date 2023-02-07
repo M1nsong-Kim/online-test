@@ -2,6 +2,8 @@ package goodee.gdj58.online.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,24 +19,44 @@ import goodee.gdj58.online.vo.Teacher;
 public class TeacherController {
 	@Autowired TeacherService teacherService;
 	@Autowired IdService idService;
-	/*
+	
+	// 1. 선생님 기능
 	// 비밀번호 수정
-	@GetMapping("/")
-	public String modifyTeacher(HttpSession session) {
-		Teacher teacher = (Teacher)session.getAttribute("loginTeacher");
-		return "";
+	@GetMapping("/teacher/modifyTeacherPw")
+	public String modifyTeacherPw() {
+		return "teacher/modifyTeacherPw";
 	}
-	*/
-	
-	// Employee
-	
+	@PostMapping("/teacher/modifyTeacherPw")
+	public String modifyTeacherPw(HttpSession session, @RequestParam("oldPw") String oldPw, @RequestParam("newPw") String newPw) {
+		Teacher loginTeacher = (Teacher)session.getAttribute("loginTeacher");
+		teacherService.modifyTeacherPw(loginTeacher.getTeacherNo(), oldPw, newPw);
+		return "redirect:/loginTeacher";
+	}
+	// 로그인
+	@GetMapping("/loginTeacher")
+	public String loginTeacher() {
+		return "teacher/loginTeacher";
+	}
+	@PostMapping("/loginTeacher")
+	public String loginTeacher(HttpSession session, Teacher teacher) {
+		Teacher resultTeacher = teacherService.login(teacher);
+		session.setAttribute("loginTeacher", resultTeacher);
+		return "redirect:/loginTeacher";	// sendRedirect, CM -> C
+	}
+	// 로그아웃
+	@GetMapping("/teacher/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/loginTeacher";
+	}
+
+	// 2. 직원의 선생님 기능
 	// 삭제
 	@GetMapping("/employee/teacher/removeTeacher")
 	public String removeTeacher(int teacherNo) {
 		teacherService.removeTeacher(teacherNo);
 		return "redirect:/employee/teacher/teacherList";
-	}
-	
+	}	
 	// 등록
 	@GetMapping("/employee/teacher/addTeacher")
 	public String addTeacher() {
@@ -55,7 +77,6 @@ public class TeacherController {
 		}
 		return "redirect:/employee/teacher/teacherList";
 	}
-	
 	// 목록
 	@GetMapping("/employee/teacher/teacherList")
 	public String teacherList(Model model, @RequestParam(value="currentPage", defaultValue="1") int currentPage, @RequestParam(value="rowPerPage", defaultValue="10") int rowPerPage, @RequestParam(value="searchWord", defaultValue="") String searchWord) {
