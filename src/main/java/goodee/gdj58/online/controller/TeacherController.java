@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import goodee.gdj58.online.service.IdService;
 import goodee.gdj58.online.service.TeacherService;
 import goodee.gdj58.online.vo.Teacher;
+import goodee.gdj58.online.vo.Test;
 
 @Controller
 public class TeacherController {
@@ -21,6 +22,52 @@ public class TeacherController {
 	@Autowired IdService idService;
 	
 	// 1. 선생님 기능
+	// 1) 시험
+		// 시험 상세
+	@GetMapping("teacher/test/testOne")
+	public String testOne(Model model, int testNo) {
+		Test test = teacherService.getTestOne(testNo);
+		model.addAttribute("test", test);
+		return "teacher/test/testOne";
+	}
+		// 시험 등록
+	@GetMapping("teacher/test/addTest")
+	public String addTest() {
+		return "teacher/test/addTest";
+	}
+	@PostMapping("teacher/test/addTest")
+	public String addTest(Model model, Test test) {
+		int row = teacherService.addTest(test);
+		if(row == 0) {
+			model.addAttribute("errorMsg", "시스템 에러로 등록 실패");
+			return "teacher/test/addTest";
+		}
+		return "redirect:/teacher/test/testList";
+	}
+		// 시험 삭제
+	@GetMapping("/teacher/test/removeTest")
+	public String removeTest(int testNo) {
+		teacherService.removeTest(testNo);
+		return "redirect:/teacher/test/testList";
+	}	
+		// 시험 목록
+	@GetMapping("/teacher/test/testList")
+	public String testList(Model model, @RequestParam(value="currentPage", defaultValue="1") int currentPage, @RequestParam(value="rowPerPage", defaultValue="10") int rowPerPage) {
+		List<Test> list = teacherService.getTestList(currentPage, rowPerPage);
+		int startPage = ((currentPage-1)/rowPerPage)*rowPerPage+1;	// 한 페이지당 출력 개수와 페이지 수는 동일하다고 설정
+		int endPage = startPage + rowPerPage - 1;	// 1~10페이지 목록일 때 10
+		int lastPage = (int)Math.ceil(teacherService.getTestCount()/(double)rowPerPage);	// 가장 끝쪽
+		if(endPage > lastPage){	//마지막 페이지보다 더 큰 숫자의 페이지 존재하지 않도록
+			endPage = lastPage;
+		}
+		
+		model.addAttribute("list", list);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
+		model.addAttribute("lastPage", lastPage);
+		return "teacher/test/testList";
+	}
 	// 비밀번호 수정
 	@GetMapping("/teacher/modifyTeacherPw")
 	public String modifyTeacherPw() {

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import goodee.gdj58.online.mapper.TeacherMapper;
 import goodee.gdj58.online.vo.Teacher;
+import goodee.gdj58.online.vo.Test;
 
 @Service
 @Transactional
@@ -17,6 +18,31 @@ public class TeacherService {
 	@Autowired TeacherMapper teacherMapper;
 	
 	// 1. 선생님 기능
+	// 1) 시험
+		// 시험 상세
+	public Test getTestOne(int testNo) {
+		return teacherMapper.selectTestOne(testNo);
+	}
+		// 시험 등록
+	public int addTest(Test test) {
+		return teacherMapper.insertTest(test);
+	}
+		// 시험 삭제
+	public int removeTest(int testNo) {
+		return teacherMapper.deleteTest(testNo);
+	}
+		// 시험 목록 총 개수
+	public int getTestCount() {
+		return teacherMapper.selectTestCount();
+	}
+		// 시험 목록
+	public List<Test> getTestList(int currentPage, int rowPerPage){
+		int beginRow = (currentPage-1)*rowPerPage;
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("beginRow", beginRow);
+		paramMap.put("rowPerPage", rowPerPage);
+		return teacherMapper.selectTestList(paramMap);
+	}
 	// 로그인
 	public Teacher login(Teacher teacher) {
 		return teacherMapper.login(teacher);
