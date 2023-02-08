@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import goodee.gdj58.online.mapper.TeacherMapper;
+import goodee.gdj58.online.vo.Example;
+import goodee.gdj58.online.vo.Question;
 import goodee.gdj58.online.vo.Teacher;
 import goodee.gdj58.online.vo.Test;
 
@@ -19,9 +21,21 @@ public class TeacherService {
 	
 	// 1. 선생님 기능
 	// 1) 시험
+	// 문제/보기 추가
+	public int addExample(List<Example> exList) {
+		return teacherMapper.insertExample(exList);
+	}
+	
+	public int addQuestion(Question question) {
+		return teacherMapper.insertQuestion(question);
+	}
+	
 		// 시험 상세
-	public Test getTestOne(int testNo) {
+	public List<Map<String, Object>> getTestOne(int testNo) {
 		return teacherMapper.selectTestOne(testNo);
+	}
+	public List<Example> getExampleList(int questionNo){
+		return teacherMapper.selectExampleList(questionNo);
 	}
 		// 시험 등록
 	public int addTest(Test test) {

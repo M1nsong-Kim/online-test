@@ -5,12 +5,17 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import goodee.gdj58.online.vo.Example;
+import goodee.gdj58.online.vo.Question;
 import goodee.gdj58.online.vo.Teacher;
 import goodee.gdj58.online.vo.Test;
 
 @Mapper
 public interface TeacherMapper {
-	Test selectTestOne(int testNo);
+	int insertExample(List<Example> exList);
+	int insertQuestion(Question question);
+	List<Example> selectExampleList(int questionNo);
+	List<Map<String, Object>> selectTestOne(int testNo);
 	int insertTest(Test test);
 	int deleteTest(int testNo);
 	int selectTestCount();

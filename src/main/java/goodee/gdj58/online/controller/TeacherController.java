@@ -1,6 +1,7 @@
 package goodee.gdj58.online.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import goodee.gdj58.online.service.IdService;
 import goodee.gdj58.online.service.TeacherService;
+import goodee.gdj58.online.vo.Example;
+import goodee.gdj58.online.vo.Question;
 import goodee.gdj58.online.vo.Teacher;
 import goodee.gdj58.online.vo.Test;
 
@@ -23,11 +26,40 @@ public class TeacherController {
 	
 	// 1. 선생님 기능
 	// 1) 시험
+	// 문제 등록
+	@GetMapping("teacher/test/addQuestion")
+	public String addQuestion() {
+		return "teacher/test/addQuestion";
+	}
+	@PostMapping("teacher/test/addQuestion")
+	public String addQuestion(Model model, Question question, List<Example> exList) {
+		int row = teacherService.addQuestion(question);
+		row += teacherService.addExample(exList);
+		if(row == 5) {	// 문제1+보기4
+			model.addAttribute("errorMsg", "시스템 에러로 등록 실패");
+			return "teacher/test/addQuestion";
+		}
+		return "redirect:/teacher/test/testList";
+	}
+	
 		// 시험 상세
 	@GetMapping("teacher/test/testOne")
 	public String testOne(Model model, int testNo) {
-		Test test = teacherService.getTestOne(testNo);
-		model.addAttribute("test", test);
+		List<Map<String, Object>> testList = teacherService.getTestOne(testNo);
+		for(Map<String, Object> m : testList) {
+			int questionNo = (int)m.get("questionNo");
+			List<Example> exList = teacherService.getExampleList(questionNo);
+			// testList 문제에 보기들 추가
+			for(int i = 0; i < 4; i++) {	// 보기 4개 고정
+				m.put("exIdx"+i, exList.get(i).getExampleIdx());
+				m.put("exTitle"+i, exList.get(i).getExampleTitle());
+				m.put("exOX"+i, exList.get(i).getExampleOX());
+			}
+		}
+		model.addAttribute("testList", testList);
+		// 다른 방법
+//		List<Example> exList = teacherService.getExampleList();
+//		model.addAttribute("exList", exList);
 		return "teacher/test/testOne";
 	}
 		// 시험 등록
