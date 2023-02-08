@@ -21,11 +21,16 @@ public class TeacherService {
 	
 	// 1. 선생님 기능
 	// 1) 시험
-	// 문제/보기 추가
-	public int addExample(List<Example> exList) {
-		return teacherMapper.insertExample(exList);
+	// 보기 추가
+//	public int addExample(List<Example> exList) {
+//		return teacherMapper.insertExample(exList);
+//	}
+	// 시험당 문제 개수
+	public int getQuestionCountByTest(int testNo) {
+		return teacherMapper.selectQuestionCountByTest(testNo);
 	}
 	
+	// 문제 추가
 	public int addQuestion(Question question) {
 		return teacherMapper.insertQuestion(question);
 	}

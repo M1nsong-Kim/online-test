@@ -12,7 +12,8 @@ import goodee.gdj58.online.vo.Test;
 
 @Mapper
 public interface TeacherMapper {
-	int insertExample(List<Example> exList);
+	int insertExample(Example example);
+	int selectQuestionCountByTest(int testNo);
 	int insertQuestion(Question question);
 	List<Example> selectExampleList(int questionNo);
 	List<Map<String, Object>> selectTestOne(int testNo);

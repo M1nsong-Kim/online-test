@@ -18,7 +18,9 @@ import goodee.gdj58.online.vo.Example;
 import goodee.gdj58.online.vo.Question;
 import goodee.gdj58.online.vo.Teacher;
 import goodee.gdj58.online.vo.Test;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 public class TeacherController {
 	@Autowired TeacherService teacherService;
@@ -28,18 +30,33 @@ public class TeacherController {
 	// 1) 시험
 	// 문제 등록
 	@GetMapping("teacher/test/addQuestion")
-	public String addQuestion() {
+	public String addQuestion(Model model, int testNo) {
+		model.addAttribute("testNo", testNo);
+		model.addAttribute("questionCount", teacherService.getQuestionCountByTest(testNo));
 		return "teacher/test/addQuestion";
 	}
 	@PostMapping("teacher/test/addQuestion")
-	public String addQuestion(Model model, Question question, List<Example> exList) {
-		int row = teacherService.addQuestion(question);
-		row += teacherService.addExample(exList);
-		if(row == 5) {	// 문제1+보기4
+	public String addQuestion(Model model, Question question
+							, @RequestParam(value="exampleIdx") int[] exampleIdx
+							, @RequestParam(value="exampleTitle") String[] exampleTitle
+							, @RequestParam(value="exampleOX") String[] exampleOX) {
+		for(int i : exampleIdx) {
+			log.debug("\u001B[31m"+"★★★★★★★★★★보기번호★★★★★★★★"+i+"★★★★★★★★★★★★★★★★★★★★★★★★★★★★");	
+		}
+		for(String i : exampleTitle) {
+			log.debug("\u001B[31m"+"★★★★★★★★보기★★★★★★★★★★"+i+"★★★★★★★★★★★★★★★★★★★★★★★★★★★★");	
+		}
+		for(String i : exampleOX) {			
+			log.debug("\u001B[31m"+"★★★★★★★★정답/오답★★★★★★★★★"+i+"★★★★★★★★★★★★★★★★★★★★★★★★★★★★");	
+		}
+		
+		int row = teacherService.addQuestion(question);	// 생성된 questionNo 가져올 방법 getGeneratedKeys();
+//		row += teacherService.addExample();
+		if(row == 0) {
 			model.addAttribute("errorMsg", "시스템 에러로 등록 실패");
 			return "teacher/test/addQuestion";
 		}
-		return "redirect:/teacher/test/testList";
+		return "redirect:/teacher/test/addExample";
 	}
 	
 		// 시험 상세

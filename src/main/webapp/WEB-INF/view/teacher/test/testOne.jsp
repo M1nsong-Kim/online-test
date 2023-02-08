@@ -8,7 +8,7 @@
 </head>
 <body>
  	<h1>${testList.get(0).get("testTitle")}</h1>
- 	<a href="${pageContext.request.contextPath}/teacher/test/addQuestion">문제추가</a>
+ 	<a href="${pageContext.request.contextPath}/teacher/test/addQuestion?testNo=${testList.get(0).get('testNo')}">문제추가</a>
  	<table>
  		<tr>
  			<th>문제번호</th>
