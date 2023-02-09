@@ -7,6 +7,10 @@
 <title>온라인 시험 | 문제 관리</title>
 </head>
 <body>
+	<div>
+		<c:import url="/WEB-INF/view/teacher/inc/teacherMenu.jsp"></c:import>
+	</div>
+	
  	<h1>${testList.get(0).get("testTitle")}</h1>
  	<a href="${pageContext.request.contextPath}/teacher/test/addQuestion?testNo=${testList.get(0).get('testNo')}">문제추가</a>
  	<table>

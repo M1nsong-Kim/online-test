@@ -28,6 +28,24 @@ public class TeacherController {
 	
 	// 1. 선생님 기능
 	// 1) 시험
+		// 시험 수정
+	@GetMapping("teacher/test/modifyTest")
+	public String modifyTest(Model model, int testNo) {
+		String testTitle = (String)teacherService.getTestOne(testNo).get(0).get("testTitle");
+		model.addAttribute("testTitle", testTitle);
+		model.addAttribute("testNo", testNo);
+		return "teacher/test/modifyTest";
+	}
+	@PostMapping("teacher/test/modifyTest")
+	public String modifyTest(Model model, Test test) {
+		int row = teacherService.modifyTest(test);
+		if(row == 0) {
+			model.addAttribute("errorMsg", "시스템 에러로 등록 실패");
+			return "employee/teacher/modifyTest";
+		}
+		return "redirect:/teacher/test/testList";
+	}
+	
 		// 문제 삭제
 	@GetMapping("teacher/test/removeQuestion")
 	public String removeQuestionAndExample(int questionNo) {

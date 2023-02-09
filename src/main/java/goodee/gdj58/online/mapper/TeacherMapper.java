@@ -12,6 +12,7 @@ import goodee.gdj58.online.vo.Test;
 
 @Mapper
 public interface TeacherMapper {
+	int updateTest(Test test);
 	int deleteQuestionAndExample(int questionNo);
 	int updateExample(Example example);
 	int updateQuestion(Question question);

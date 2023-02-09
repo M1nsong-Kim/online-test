@@ -18,6 +18,7 @@
 			<th>시험번호</th>
 			<th>시험명</th>
 			<th>실시일자</th>
+			<th>수정</th>
 			<th>삭제</th>
 		</tr>
 		<c:forEach var="t" items="${list}">	
@@ -25,6 +26,7 @@
 				<td>${t.testNo}</td>
 				<td><a href="${pageContext.request.contextPath}/teacher/test/testOne?testNo=${t.testNo}">${t.testTitle}</a></td>
 				<td>${t.testDate}</td>
+				<td><a href="${pageContext.request.contextPath}/teacher/test/modifyTest?testNo=${t.testNo}">수정</a></td>
 				<td><a href="${pageContext.request.contextPath}/teacher/test/removeTest?testNo=${t.testNo}">삭제</a></td>
 			</tr>
 		</c:forEach>
