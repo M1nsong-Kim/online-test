@@ -50,13 +50,23 @@ public class TeacherController {
 			log.debug("\u001B[31m"+"★★★★★★★★정답/오답★★★★★★★★★"+i+"★★★★★★★★★★★★★★★★★★★★★★★★★★★★");	
 		}
 		
-		int row = teacherService.addQuestion(question);	// 생성된 questionNo 가져올 방법 getGeneratedKeys();
-//		row += teacherService.addExample();
-		if(row == 0) {
+		int questionNo = teacherService.addQuestion(question);
+		log.debug("\u001B[31m"+"★★★★★★★★questionNo★★★★★★★★★"+questionNo+"★★★★★★★★★★★★★★★★★★★★★★★★★★★★");	
+		int row = 0;
+		for(int i = 0; i < 4; i++) {	// 보기 4개
+			Example example = new Example();
+			example.setQuestionNo(questionNo);
+			example.setExampleIdx(exampleIdx[i]);
+			example.setExampleTitle(exampleTitle[i]);
+			example.setExampleOX(exampleOX[i]);
+			teacherService.addExample(example);
+			row++;
+		}
+		if(row != 4) {	// 보기 4개가 모두 들어가지 않음
 			model.addAttribute("errorMsg", "시스템 에러로 등록 실패");
 			return "teacher/test/addQuestion";
 		}
-		return "redirect:/teacher/test/addExample";
+		return "redirect:/teacher/test/testList";
 	}
 	
 		// 시험 상세

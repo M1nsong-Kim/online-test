@@ -13,7 +13,9 @@ import goodee.gdj58.online.vo.Example;
 import goodee.gdj58.online.vo.Question;
 import goodee.gdj58.online.vo.Teacher;
 import goodee.gdj58.online.vo.Test;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @Transactional
 public class TeacherService {
@@ -22,9 +24,9 @@ public class TeacherService {
 	// 1. 선생님 기능
 	// 1) 시험
 	// 보기 추가
-//	public int addExample(List<Example> exList) {
-//		return teacherMapper.insertExample(exList);
-//	}
+	public int addExample(Example example) {
+		return teacherMapper.insertExample(example);
+	}
 	// 시험당 문제 개수
 	public int getQuestionCountByTest(int testNo) {
 		return teacherMapper.selectQuestionCountByTest(testNo);
@@ -32,7 +34,9 @@ public class TeacherService {
 	
 	// 문제 추가
 	public int addQuestion(Question question) {
-		return teacherMapper.insertQuestion(question);
+		teacherMapper.insertQuestion(question);
+		log.debug("\u001B[31m"+"★★★★★★★★★★★문제번호★★★★★★★★★"+question.getQuestionNo());	
+		return question.getQuestionNo();
 	}
 	
 		// 시험 상세

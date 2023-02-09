@@ -31,7 +31,6 @@
 					</td>
 					<td>
 						<input type="text" name="exampleTitle">
-						<!-- 체크된 값만 넘어감 -->
 						<input type="hidden" name="exampleOX" id="exampleOX${i}">
 						<input type="checkbox" id="OX${i}">정답
 					</td>

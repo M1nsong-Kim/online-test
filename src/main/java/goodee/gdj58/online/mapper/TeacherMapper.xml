@@ -18,7 +18,7 @@
 		WHERE test_no = #{testNo}
 	</select>
 
-	<insert id="insertQuestion" parameterType="goodee.gdj58.online.vo.Question">
+	<insert id="insertQuestion" parameterType="goodee.gdj58.online.vo.Question" useGeneratedKeys="true" keyProperty="questionNo" keyColumn="questionNo">
 		INSERT INTO question(test_no
 								, question_idx
 								, question_title) 
