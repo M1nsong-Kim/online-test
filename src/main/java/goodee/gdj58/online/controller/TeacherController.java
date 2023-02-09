@@ -28,6 +28,38 @@ public class TeacherController {
 	
 	// 1. 선생님 기능
 	// 1) 시험
+	// 문제 수정
+	@GetMapping("teacher/test/modifyQuestion")
+	public String modifyQuestion(Model model, int questionNo) {
+		// 문제 보기
+		List<Map<String, Object>> list = teacherService.getQuestionAndExample(questionNo);
+		model.addAttribute("list", list);
+		log.debug("\u001B[31m"+list.get(0).get("questionIdx"));
+		return "teacher/test/modifyQuestion";
+	}
+	@PostMapping("teacher/test/modifyQuestion")
+	public String modifyQuestion(Model model, Question question
+							, @RequestParam(value="exampleNo") int[] exampleNo
+							, @RequestParam(value="exampleIdx") int[] exampleIdx
+							, @RequestParam(value="exampleTitle") String[] exampleTitle
+							, @RequestParam(value="exampleOX") String[] exampleOX) {
+		log.debug("\u001B[31m"+"아예 안 넘어감?");
+		int row = teacherService.modifyQuestion(question);
+		log.debug("\u001B[31m"+"문제 수정 후 row : "+row);
+		for(int i = 0; i < 4; i++) {	// 보기 4개
+			Example example = new Example();
+			example.setExampleNo(exampleNo[i]);
+			example.setExampleTitle(exampleTitle[i]);
+			example.setExampleOX(exampleOX[i]);
+			row += teacherService.modifyExample(example);
+		}
+		log.debug("\u001B[31m"+"보기 수정 후 row : "+row);
+		if(row != 5) {	// 문제+보기 == 5
+			model.addAttribute("errorMsg", "시스템 에러로 등록 실패");
+			return "teacher/test/modifyQuestion";
+		}
+		return "redirect:/teacher/test/testList";
+	}
 	// 문제 등록
 	@GetMapping("teacher/test/addQuestion")
 	public String addQuestion(Model model, int testNo) {
@@ -59,8 +91,7 @@ public class TeacherController {
 			example.setExampleIdx(exampleIdx[i]);
 			example.setExampleTitle(exampleTitle[i]);
 			example.setExampleOX(exampleOX[i]);
-			teacherService.addExample(example);
-			row++;
+			row += teacherService.addExample(example);
 		}
 		if(row != 4) {	// 보기 4개가 모두 들어가지 않음
 			model.addAttribute("errorMsg", "시스템 에러로 등록 실패");

@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="goodee.gdj58.online.mapper.TeacherMapper">
+	<update id="updateExample" parameterType="goodee.gdj58.online.vo.Example">
+		UPDATE example 
+		SET	example_title = #{exampleTitle}
+			, example_ox = #{exampleOX}
+		WHERE example_no = #{exampleNo}
+	</update>
+	
+	<update id="updateQuestion" parameterType="goodee.gdj58.online.vo.Question">
+		UPDATE question
+		SET question_idx = #{questionIdx}
+			, question_title = #{questionTitle}
+		WHERE question_no = #{questionNo}
+	</update>
+	
+	<select id="selectQuestionAndExample" parameterType="int" resultType="java.util.Map">
+		SELECT q.question_no questionNo
+			, q.question_title questionTitle
+			, q.test_no testNo
+			, q.question_idx questionIdx
+			, e.example_no exampleNo
+			, e.example_idx exampleIdx
+			, e.example_title exampleTitle
+			, e.example_ox exampleOX
+		FROM question q INNER JOIN example e 
+		ON e.question_no = q.question_no
+		WHERE q.question_no = #{questionNo}
+	</select>
+	
 	<insert id="insertExample" parameterType="java.util.Map">
 		INSERT INTO example(question_no
 							, example_idx

@@ -4,13 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>온라인 시험 | 문제 등록</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </head>
 <body>
- 	<h1>시험 추가</h1>
+ 	<h1>문제 등록</h1>
 	<div>${errorMsg}</div>
-	<a href="">보기 추가/수정</a>
 	<div>한 문제당 5점씩, 총 20문제를 등록할 수 있습니다. 현재 문제 개수 ${questionCount}/20</div>
 	<form method="post" action="${pageContext.request.contextPath}/teacher/test/addQuestion" id="form">
 		<input type="hidden" name="testNo" value="${testNo}">
@@ -46,7 +45,7 @@
 		// 오답/정답
 		for(let val = 1; val < 5; val++){
 			console.log(val);
-			if ($('#OX'+val).is(':checked') == true) {
+			if ($('#OX'+val).is(':checked')) {
 			    $('#exampleOX'+val).val('정답');
 			} else {
 				$('#exampleOX'+val).val('오답');
