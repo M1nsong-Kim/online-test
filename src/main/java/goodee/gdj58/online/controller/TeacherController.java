@@ -28,7 +28,13 @@ public class TeacherController {
 	
 	// 1. 선생님 기능
 	// 1) 시험
-	// 문제 수정
+		// 문제 삭제
+	@GetMapping("teacher/test/removeQuestion")
+	public String removeQuestionAndExample(int questionNo) {
+		teacherService.removeQuestionAndExample(questionNo);
+		return "redirect:/teacher/test/testList";
+	}
+		// 문제 수정
 	@GetMapping("teacher/test/modifyQuestion")
 	public String modifyQuestion(Model model, int questionNo) {
 		// 문제 보기

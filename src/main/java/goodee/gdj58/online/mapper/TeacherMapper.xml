@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="goodee.gdj58.online.mapper.TeacherMapper">
+	<delete id="deleteQuestionAndExample" parameterType="int">
+		DELETE FROM e, q
+	    USING example e
+		    LEFT JOIN question q
+		    ON e.question_no = q.question_no
+		WHERE q.question_no = #{questionNo}
+	</delete>
+
 	<update id="updateExample" parameterType="goodee.gdj58.online.vo.Example">
 		UPDATE example 
 		SET	example_title = #{exampleTitle}

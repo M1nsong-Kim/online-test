@@ -13,6 +13,7 @@
  		<tr>
  			<th>문제번호</th>
  			<th>수정</th>
+ 			<th>삭제</th>
  			<th colspan="4">문제</th>
  		</tr>
  		<c:forEach var="t" items="${testList}">	
@@ -20,6 +21,9 @@
 				<td>${t.questionIdx}</td>
 				<td>
 					<a href="${pageContext.request.contextPath}/teacher/test/modifyQuestion?questionNo=${t.questionNo}">수정</a>
+				</td>
+				<td>
+					<a href="${pageContext.request.contextPath}/teacher/test/removeQuestion?questionNo=${t.questionNo}">삭제</a>
 				</td>
 				<td>${t.questionTitle}</td>
 			</tr>

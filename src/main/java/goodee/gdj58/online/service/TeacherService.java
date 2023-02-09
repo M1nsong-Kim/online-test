@@ -23,6 +23,11 @@ public class TeacherService {
 	
 	// 1. 선생님 기능
 	// 1) 시험
+		// 문제 삭제
+	public int removeQuestionAndExample(int questionNo) {
+		return teacherMapper.deleteQuestionAndExample(questionNo);
+	}
+	
 		// 보기 수정
 	public int modifyExample(Example example) {
 		return teacherMapper.updateExample(example);

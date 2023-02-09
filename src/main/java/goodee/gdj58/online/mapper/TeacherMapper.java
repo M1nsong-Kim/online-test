@@ -12,6 +12,7 @@ import goodee.gdj58.online.vo.Test;
 
 @Mapper
 public interface TeacherMapper {
+	int deleteQuestionAndExample(int questionNo);
 	int updateExample(Example example);
 	int updateQuestion(Question question);
 	List<Map<String,Object>> selectQuestionAndExample(int questionNo);	// 문제+보기 반환
