@@ -121,7 +121,7 @@ public class TeacherController {
 			model.addAttribute("errorMsg", "시스템 에러로 등록 실패");
 			return "teacher/test/addQuestion";
 		}
-		return "redirect:/teacher/test/testList";
+		return "redirect:/teacher/test/testOne?testNo="+question.getTestNo();
 	}
 	
 		// 시험 상세
@@ -162,6 +162,9 @@ public class TeacherController {
 	@GetMapping("/teacher/test/removeTest")
 	public String removeTest(int testNo) {
 		teacherService.removeTest(testNo);
+		
+		// 문제도 삭제해야 함~! 아마 questionNo 구하는 메서드 따로 만들어야 할 것
+		
 		return "redirect:/teacher/test/testList";
 	}	
 		// 시험 목록
