@@ -13,13 +13,45 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import goodee.gdj58.online.service.IdService;
 import goodee.gdj58.online.service.StudentService;
+import goodee.gdj58.online.service.TeacherService;
 import goodee.gdj58.online.vo.Student;
+import goodee.gdj58.online.vo.Test;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 public class StudentController {
 	@Autowired StudentService studentService;
 	@Autowired IdService idService;
+	@Autowired TeacherService teacherService;
+	
 	// 1. 학생 기능
+	// 시험 목록 (선생님 시험 목록 메서드 사용) testActive 컬럼 추가 후 수정
+	@GetMapping("/student/test/testList")
+	public String testList(HttpSession session, Model model, @RequestParam(value="currentPage", defaultValue="1") int currentPage, @RequestParam(value="rowPerPage", defaultValue="10") int rowPerPage) {
+		Student loginStudent = (Student)session.getAttribute("loginStudent");
+		List<Integer> takenTestList = studentService.getTakenTestList(loginStudent.getStudentNo());
+		List<Test> list = teacherService.getTestList(currentPage, rowPerPage);
+		int startPage = ((currentPage-1)/rowPerPage)*rowPerPage+1;	// 한 페이지당 출력 개수와 페이지 수는 동일하다고 설정
+		int endPage = startPage + rowPerPage - 1;	// 1~10페이지 목록일 때 10
+		int lastPage = (int)Math.ceil(teacherService.getTestCount()/(double)rowPerPage);	// 가장 끝쪽
+		if(endPage > lastPage){	//마지막 페이지보다 더 큰 숫자의 페이지 존재하지 않도록
+			endPage = lastPage;
+		}
+		
+		for(int i : takenTestList) {
+			log.debug("\u001B[31m"+"응시한 시험 회차들"+i);
+		}
+		
+		model.addAttribute("takenTestList", takenTestList);
+		model.addAttribute("list", list);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
+		model.addAttribute("lastPage", lastPage);
+		return "student/test/testList";
+	}
+	
 	// 비밀번호 수정
 	@GetMapping("/student/modifyStudentPw")
 	public String modifyStudentPw() {

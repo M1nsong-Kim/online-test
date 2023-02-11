@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="goodee.gdj58.online.mapper.StudentMapper">
+	<select id="selectTakenTestList" parameterType="int" resultType="int">
+		SELECT q.test_no
+		FROM question q INNER JOIN paper p 
+		ON q.question_no = p.question_no
+		WHERE p.student_no = #{studentNo}
+		GROUP BY q.test_no
+	</select>
+
 	<update id="updateStudentPw" parameterType="java.util.Map">
 		UPDATE student
 		SET student_pw = PASSWORD(#{newPw})

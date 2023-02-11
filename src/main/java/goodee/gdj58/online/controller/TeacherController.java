@@ -67,7 +67,6 @@ public class TeacherController {
 							, @RequestParam(value="exampleIdx") int[] exampleIdx
 							, @RequestParam(value="exampleTitle") String[] exampleTitle
 							, @RequestParam(value="exampleOX") String[] exampleOX) {
-		log.debug("\u001B[31m"+"아예 안 넘어감?");
 		int row = teacherService.modifyQuestion(question);
 		log.debug("\u001B[31m"+"문제 수정 후 row : "+row);
 		for(int i = 0; i < 4; i++) {	// 보기 4개
