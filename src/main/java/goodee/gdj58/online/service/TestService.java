@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import goodee.gdj58.online.mapper.TestMapper;
 import goodee.gdj58.online.vo.Example;
+import goodee.gdj58.online.vo.Paper;
 import goodee.gdj58.online.vo.Question;
 import goodee.gdj58.online.vo.Test;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,11 @@ public class TestService {
 	@Autowired TestMapper testMapper;
 	
 	// 1. 학생
+	// 답안지 등록
+	public int addPaper(Paper paper) {
+		return testMapper.insertPaper(paper);
+	}
+	
 	// 이미 응시한 시험 목록
 	public List<Integer> getTakenTestList(int studentNo){
 		return testMapper.selectTakenTestList(studentNo);

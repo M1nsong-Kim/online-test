@@ -25,16 +25,22 @@
 				<td>${t.testTitle}</td>
 				<td>${t.testDate}</td>
 				<td>
-					<c:forEach var="tt" items="${takenTestList}">
-						<c:if test="${tt != t.testNo}">
-							<a href="${pageContext.request.contextPath}/student/test/testOne?testNo=${t.testNo}">응시</a>
-						</c:if>
-					</c:forEach>
-					<c:forEach var="tt" items="${takenTestList}">
-						<c:if test="${tt == t.testNo}">
-							<a href="${pageContext.request.contextPath}/student/test/testPaper?testNo=${t.testNo}">답안확인</a>
-						</c:if>
-					</c:forEach>
+					<c:if test="${!takenTestList.isEmpty()}">
+						<c:forEach var="tt" items="${takenTestList}">
+							<c:if test="${tt != t.testNo}">
+								<a href="${pageContext.request.contextPath}/student/test/testOne?testNo=${t.testNo}">응시</a>
+							</c:if>
+						</c:forEach>
+						<c:forEach var="tt" items="${takenTestList}">
+							<c:if test="${tt == t.testNo}">
+								<a href="${pageContext.request.contextPath}/student/test/testPaper?testNo=${t.testNo}">답안확인</a>
+							</c:if>
+						</c:forEach>
+					</c:if>
+					<!-- paper 테이블이 비어 있는 초기 상태 고려 -->
+					<c:if test="${takenTestList.isEmpty()}">
+						<a href="${pageContext.request.contextPath}/student/test/testOne?testNo=${t.testNo}">응시</a>
+					</c:if>
 				</td>
 			</tr>
 		</c:forEach>

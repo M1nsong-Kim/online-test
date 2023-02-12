@@ -6,11 +6,13 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import goodee.gdj58.online.vo.Example;
+import goodee.gdj58.online.vo.Paper;
 import goodee.gdj58.online.vo.Question;
 import goodee.gdj58.online.vo.Test;
 
 @Mapper
 public interface TestMapper {
+	int insertPaper(Paper paper);
 	List<Integer> selectTakenTestList(int studentNo);
 	
 	int updateTest(Test test);

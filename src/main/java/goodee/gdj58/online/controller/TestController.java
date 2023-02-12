@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import goodee.gdj58.online.service.TestService;
 import goodee.gdj58.online.vo.Example;
+import goodee.gdj58.online.vo.Paper;
 import goodee.gdj58.online.vo.Question;
 import goodee.gdj58.online.vo.Student;
 import goodee.gdj58.online.vo.Test;
@@ -37,11 +38,7 @@ public class TestController {
 		if(endPage > lastPage){	//마지막 페이지보다 더 큰 숫자의 페이지 존재하지 않도록
 			endPage = lastPage;
 		}
-		
-		for(int i : takenTestList) {
-			log.debug("\u001B[31m"+"응시한 시험 회차들"+i);
-		}
-		
+
 		model.addAttribute("takenTestList", takenTestList);
 		model.addAttribute("list", list);
 		model.addAttribute("currentPage", currentPage);
@@ -69,6 +66,26 @@ public class TestController {
 		return "student/test/testOne";
 	}
 	@PostMapping("student/test/testOne")
+	public String testOneForStudent(HttpSession session
+									, Model model
+									, @RequestParam(value="questionNo") int[] questionNo
+									, @RequestParam(value="answer") int[] answer) {
+		Student loginStudent = (Student)session.getAttribute("loginStudent");
+		int studentNo = loginStudent.getStudentNo();
+		int row = 0;
+		for(int i = 0; i < questionNo.length; i++) {
+			Paper paper = new Paper();
+			paper.setStudentNo(studentNo);
+			paper.setQuestionNo(questionNo[i]);
+			paper.setAnswer(answer[i]);
+			row += testService.addPaper(paper);
+		}
+		if(row != 20) {	// 총 20문제
+			model.addAttribute("errorMsg", "시스템 에러로 등록 실패");
+			return "student/test/testOne";
+		}
+		return "redirect:/student/test/testList";
+	}
 	
 	
 	// 2. 선생님
