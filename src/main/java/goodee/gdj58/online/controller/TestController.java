@@ -26,6 +26,37 @@ public class TestController {
 	@Autowired TestService testService;
 	
 	// 1. 학생
+		// 시험 점수 확인
+	@GetMapping("/student/test/testPaper")
+	public String testPaper(HttpSession session, Model model, int testNo) {
+		Student loginStudent = (Student)session.getAttribute("loginStudent");
+		int studentNo = loginStudent.getStudentNo();
+		int score = testService.getScoreByTest(studentNo, testNo);	// 문제당 5점 * 20 = 총 100점
+		List<Map<String, Object>> testList = testService.getTestOne(testNo);
+		List<Example> exList = null;		
+		for(Map<String, Object> m : testList) {
+			int questionNo = (int)m.get("questionNo");
+			// 보기
+			exList = testService.getExampleList(questionNo);
+			if(exList != null) {	
+				// testList 문제에 보기들 추가
+				for(int i = 0; i < 4; i++) {	// 보기 4개 고정
+					m.put("exIdx"+i, exList.get(i).getExampleIdx());
+					m.put("exTitle"+i, exList.get(i).getExampleTitle());
+					m.put("exOX"+i, exList.get(i).getExampleOX());
+				}
+			}
+			
+			// 학생 답
+			m.put("answer", testService.getAnswerOfStudent(questionNo));
+		}
+		
+		model.addAttribute("testList", testList);
+		model.addAttribute("exList", exList);
+		model.addAttribute("score", score);
+		return "student/test/testPaper";
+	}
+	
 		// 시험 목록 (선생님 시험 목록 메서드 사용) testActive 컬럼 추가 후 수정
 	@GetMapping("/student/test/testList")
 	public String testList(HttpSession session, Model model, @RequestParam(value="currentPage", defaultValue="1") int currentPage, @RequestParam(value="rowPerPage", defaultValue="10") int rowPerPage) {
@@ -188,22 +219,21 @@ public class TestController {
 	@GetMapping("teacher/test/testOne")
 	public String testOne(Model model, int testNo) {
 		List<Map<String, Object>> testList = testService.getTestOne(testNo);
-		List<Example> exList = null;
-		if(testList.get(0).get("questionNo") != null) {			
-			for(Map<String, Object> m : testList) {
-				log.debug("\u001B[31m"+"★★★★★★★★testList★★★★★★★★★"+m);
-				int questionNo = (int)m.get("questionNo");
-				exList = testService.getExampleList(questionNo);
-				if(exList != null) {	
-					// testList 문제에 보기들 추가
-					for(int i = 0; i < 4; i++) {	// 보기 4개 고정
-						m.put("exIdx"+i, exList.get(i).getExampleIdx());
-						m.put("exTitle"+i, exList.get(i).getExampleTitle());
-						m.put("exOX"+i, exList.get(i).getExampleOX());
-					}
+		List<Example> exList = null;			
+		for(Map<String, Object> m : testList) {
+			log.debug("\u001B[31m"+"★★★★★★★★testList★★★★★★★★★"+m);
+			int questionNo = (int)m.get("questionNo");
+			exList = testService.getExampleList(questionNo);
+			if(exList != null) {	
+				// testList 문제에 보기들 추가
+				for(int i = 0; i < 4; i++) {	// 보기 4개 고정
+					m.put("exIdx"+i, exList.get(i).getExampleIdx());
+					m.put("exTitle"+i, exList.get(i).getExampleTitle());
+					m.put("exOX"+i, exList.get(i).getExampleOX());
 				}
 			}
 		}
+		
 		model.addAttribute("testList", testList);
 		model.addAttribute("exList", exList);
 		// 다른 방법

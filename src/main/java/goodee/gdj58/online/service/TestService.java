@@ -22,6 +22,19 @@ public class TestService {
 	@Autowired TestMapper testMapper;
 	
 	// 1. 학생
+	// 학생 답안
+	public int getAnswerOfStudent(int questionNo) {
+		return testMapper.selectAnswerOfStudent(questionNo);
+	}
+	
+	// 점수 확인
+	public int getScoreByTest(int studentNo, int testNo) {
+		Map<String, Integer> paramMap = new HashMap<>();
+		paramMap.put("studentNo", studentNo);
+		paramMap.put("testNo", testNo);
+		return testMapper.selectScoreByTest(paramMap);
+	}
+	
 	// 답안지 등록
 	public int addPaper(Paper paper) {
 		return testMapper.insertPaper(paper);

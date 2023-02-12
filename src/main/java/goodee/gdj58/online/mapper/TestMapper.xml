@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="goodee.gdj58.online.mapper.TestMapper">
+	<select id="selectAnswerOfStudent" parameterType="int" resultType="int">
+		SELECT answer
+		FROM paper
+		WHERE question_no = #{questionNo}
+	</select>
+
+	<select id="selectScoreByTest" resultType="int" parameterType="java.util.Map">
+		SELECT COUNT(*)
+		FROM (SELECT ex.question_no question_no, ex.example_ox example_ox, ex.example_idx example_idx 
+					FROM example ex INNER JOIN (SELECT question_no FROM question WHERE test_no = #{testNo}) t 
+					ON ex.question_no = t.question_no) e 
+				INNER JOIN paper p
+		ON e.question_no = p.question_no AND e.example_idx = p.answer
+		WHERE e.example_ox = '정답' AND p.student_no = #{studentNo}
+	</select>
+
 	<insert id="insertPaper" parameterType="goodee.gdj58.online.vo.Paper">
 		INSERT INTO paper(student_no
 						, question_no
