@@ -35,18 +35,24 @@
 				<td colspan="2"></td>
 				<!-- 실행 시점이 달라서 반복문 돌리면서 i로 숫자 덧붙이는 건 불가능 -->
 				<!-- 간격 맞추려고 td 분리 -->
-				<td>
-					<input type="radio" <c:if test="${t.exOX0 eq '정답'}">checked</c:if>>${t.exIdx0}. ${t.exTitle0}
-				</td>
-				<td>
-					<input type="radio" <c:if test="${t.exOX1 eq '정답'}">checked</c:if>>${t.exIdx1}. ${t.exTitle1}
-				</td>
-				<td>
-					<input type="radio" <c:if test="${t.exOX2 eq '정답'}">checked</c:if>>${t.exIdx2}. ${t.exTitle2}
-				</td>
-				<td>
-					<input type="radio" <c:if test="${t.exOX3 eq '정답'}">checked</c:if>>${t.exIdx3}. ${t.exTitle3}
-				</td>
+				<!-- 분기 -->
+				<c:if test="${exList != null}">
+					<td>
+						<input type="radio" <c:if test="${t.exOX0 eq '정답'}">checked</c:if>>${t.exIdx0}. ${t.exTitle0}
+					</td>
+					<td>
+						<input type="radio" <c:if test="${t.exOX1 eq '정답'}">checked</c:if>>${t.exIdx1}. ${t.exTitle1}
+					</td>
+					<td>
+						<input type="radio" <c:if test="${t.exOX2 eq '정답'}">checked</c:if>>${t.exIdx2}. ${t.exTitle2}
+					</td>
+					<td>
+						<input type="radio" <c:if test="${t.exOX3 eq '정답'}">checked</c:if>>${t.exIdx3}. ${t.exTitle3}
+					</td>
+				</c:if>
+				<c:if test="${exList != null}">
+					<td colspan="4"></td>
+				</c:if>
 			</tr>
 			<!-- 
 			<tr>

@@ -15,12 +15,8 @@ import goodee.gdj58.online.vo.Student;
 @Transactional
 public class StudentService {
 	@Autowired StudentMapper studentMapper;
-	// 1. 학생 기능
-	// 이미 응시한 시험 목록
-	public List<Integer> getTakenTestList(int studentNo){
-		return studentMapper.selectTakenTestList(studentNo);
-	}
 	
+	// 1. 학생 기능
 	// 로그인
 	public Student login(Student student) {
 		return studentMapper.login(student);
