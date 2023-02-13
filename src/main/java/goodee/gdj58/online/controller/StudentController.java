@@ -11,14 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import goodee.gdj58.online.service.IdService;
 import goodee.gdj58.online.service.StudentService;
 import goodee.gdj58.online.vo.Student;
 
 @Controller
 public class StudentController {
 	@Autowired StudentService studentService;
-	@Autowired IdService idService;
 	
 	// 1. 학생 기능
 	// 비밀번호 수정
@@ -65,11 +63,6 @@ public class StudentController {
 	}
 	@PostMapping("/employee/student/addStudent")
 	public String addStudent(Model model, Student student) {
-		String idCheck = idService.getIdCheck(student.getStudentId());
-		if(idCheck != null) {
-			model.addAttribute("errorMsg", "중복 ID");
-			return "employee/student/addStudent";
-		}
 		int row = studentService.addStudent(student);
 		if(row == 0) {
 			model.addAttribute("errorMsg", "시스템 에러로 등록 실패");

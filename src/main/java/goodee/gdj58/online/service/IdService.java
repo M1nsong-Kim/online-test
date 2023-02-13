@@ -13,6 +13,10 @@ public class IdService {
 	
 	// null이면 사용 가능한 아이디
 	public String getIdCheck(String id) {
-		return idMapper.selectIdCheck(id);
+		String idCheck = "NO";
+		if(idMapper.selectIdCheck(id) == null) {
+			idCheck = "YES";
+		}
+		return idCheck;
 	}
 }

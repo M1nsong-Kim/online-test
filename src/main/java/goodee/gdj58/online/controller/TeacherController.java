@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import goodee.gdj58.online.service.IdService;
 import goodee.gdj58.online.service.TeacherService;
 import goodee.gdj58.online.service.TestService;
 import goodee.gdj58.online.vo.Teacher;
@@ -20,7 +19,6 @@ import goodee.gdj58.online.vo.Teacher;
 public class TeacherController {
 	@Autowired TeacherService teacherService;
 	@Autowired TestService testService;
-	@Autowired IdService idService;
 	
 	// 1. 선생님 기능
 	// 시험은 Test 따로
@@ -68,12 +66,6 @@ public class TeacherController {
 	}
 	@PostMapping("/employee/teacher/addTeacher")
 	public String addTeacher(Model model, Teacher teacher) {
-		String idCheck = idService.getIdCheck(teacher.getTeacherId());
-		if(idCheck != null) {
-			model.addAttribute("errorMsg", "중복 ID");
-			return "employee/teacher/addTeacher";
-		}
-		
 		int row = teacherService.addTeacher(teacher);
 		if(row == 0) {
 			model.addAttribute("errorMsg", "시스템 에러로 등록 실패");

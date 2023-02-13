@@ -12,14 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import goodee.gdj58.online.service.EmployeeService;
-import goodee.gdj58.online.service.IdService;
 import goodee.gdj58.online.vo.Employee;
 
 @Controller
 public class EmployeeController {
 	@Autowired 
 	EmployeeService employeeService;
-	@Autowired IdService idService;
 	
 	// 로그인
 	@GetMapping("/loginEmp")
@@ -69,12 +67,6 @@ public class EmployeeController {
 	}
 	@PostMapping("/employee/addEmp")
 	public String addEmp(Model model, Employee employee) {
-		String idCheck = idService.getIdCheck(employee.getEmpId());
-		if(idCheck != null) {
-			model.addAttribute("errorMsg", "중복 ID");	// 메서드의 매개변수에 model을 추가하고 attribute에 넣는다
-			return "employee/addEmp";	// redirect도 가능하지만 parameter 왔다갔다하는 게 불편하므로 ↑
-		}
-		
 		int row = employeeService.addEmployee(employee);
 		if(row == 0) {
 			model.addAttribute("errorMsg", "시스템 에러로 등록 실패");
