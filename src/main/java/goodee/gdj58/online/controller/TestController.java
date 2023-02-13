@@ -26,7 +26,13 @@ public class TestController {
 	@Autowired TestService testService;
 	
 	// 1. 학생
-		// 시험 점수 확인
+		// 전체 성적 확인
+	@GetMapping("/student/test/testScore")
+	public String testScore() {
+		return "student/test/testScore";
+	}
+	
+		// 개별 시험 점수 확인
 	@GetMapping("/student/test/testPaper")
 	public String testPaper(HttpSession session, Model model, int testNo) {
 		Student loginStudent = (Student)session.getAttribute("loginStudent");
@@ -57,9 +63,10 @@ public class TestController {
 		return "student/test/testPaper";
 	}
 	
-		// 시험 목록 (선생님 시험 목록 메서드 사용) testActive 컬럼 추가 후 수정
+		// 시험 목록 testActive 컬럼 추가 후 수정
 	@GetMapping("/student/test/testList")
 	public String testList(HttpSession session, Model model, @RequestParam(value="currentPage", defaultValue="1") int currentPage, @RequestParam(value="rowPerPage", defaultValue="10") int rowPerPage) {
+		// 시험 목록
 		Student loginStudent = (Student)session.getAttribute("loginStudent");
 		List<Integer> takenTestList = testService.getTakenTestList(loginStudent.getStudentNo());
 		List<Test> list = testService.getTestList(currentPage, rowPerPage);

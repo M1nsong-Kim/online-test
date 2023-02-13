@@ -12,6 +12,7 @@ import goodee.gdj58.online.vo.Test;
 
 @Mapper
 public interface TestMapper {
+	List<Map<String, Object>> selectScoreList(int studentNo);
 	int selectAnswerOfStudent(int questionNo);
 	int selectScoreByTest(Map<String, Integer> paramMap);
 	int insertPaper(Paper paper);

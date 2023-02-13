@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="goodee.gdj58.online.mapper.TestMapper">
+	<select id="selectScoreList" parameterType="int" resultType="java.util.Map">
+		SELECT test_no testNo
+				, test_title testTitle
+		FROM test 
+		WHERE test_no IN (SELECT q.test_no
+								FROM paper p INNER JOIN question q ON p.question_no = q.question_no
+								WHERE p.student_no = #{studentNo})
+	</select>
+
 	<select id="selectAnswerOfStudent" parameterType="int" resultType="int">
 		SELECT answer
 		FROM paper
@@ -8,7 +17,7 @@
 	</select>
 
 	<select id="selectScoreByTest" resultType="int" parameterType="java.util.Map">
-		SELECT COUNT(*)
+		SELECT COUNT(*)*5
 		FROM (SELECT ex.question_no question_no, ex.example_ox example_ox, ex.example_idx example_idx 
 					FROM example ex INNER JOIN (SELECT question_no FROM question WHERE test_no = #{testNo}) t 
 					ON ex.question_no = t.question_no) e 

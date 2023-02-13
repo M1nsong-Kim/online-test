@@ -22,6 +22,11 @@ public class TestService {
 	@Autowired TestMapper testMapper;
 	
 	// 1. 학생
+	// 시험회사+점수
+	public List<Map<String, Object>> getScoreList(int studentNo){
+		return testMapper.selectScoreList(studentNo);
+	}
+	
 	// 학생 답안
 	public int getAnswerOfStudent(int questionNo) {
 		return testMapper.selectAnswerOfStudent(questionNo);
