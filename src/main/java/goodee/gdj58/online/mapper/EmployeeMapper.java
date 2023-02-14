@@ -22,7 +22,7 @@ public interface EmployeeMapper {
 /*
 스프링이 밑의 클래스 등을 다 만들어줌
 스프링이 보관하고 있는 이런 객체들을 bean이라고 부름
-public class EmployeeMapperClass implements EmploeeMapper{
+public class EmployeeMapperClass implements EmployeeMapper{
 	
 }
 */

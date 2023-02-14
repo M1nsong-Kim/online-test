@@ -22,6 +22,8 @@ public class OnlineTestRestController {
 	@Autowired TestService testService;
 	@Autowired IdService idService;
 	
+	// 비밀번호 일치 확인
+	
 	// 직원 아이디 중복 확인
 	@GetMapping("/idCheck")
 	public String idCheckEmp(@RequestParam(value = "empId", required = false) String empId
@@ -35,24 +37,7 @@ public class OnlineTestRestController {
 			return idService.getIdCheck(studentId);
 		}
 	}
-	
-	// 직원 아이디 중복 확인
-//	@GetMapping("/idCheckEmp")
-//	public String idCheckEmp(@RequestParam(value = "empId") String empId) {
-//		return idService.getIdCheck(empId);			
-//	}
-	// 강사 아이디 중복 확인
-//	@GetMapping("/idCheckTeacher")
-//	public String idCheckTeacher(@RequestParam(value = "teacherId") String teacherId) {
-//		return idService.getIdCheck(teacherId);
-//	}
-//	
-//	// 학생 아이디 중복 확인
-//	@GetMapping("/idCheckStudent")
-//	public String idCheckStudent(@RequestParam(value = "studentId") String studentId) {
-//		return idService.getIdCheck(studentId);
-//	}
-	
+
 	// 시험 성적 차트
 	@GetMapping("/testScore")
 	public Map<String, Integer> testScore(HttpSession session) {

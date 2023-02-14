@@ -5,6 +5,32 @@
 <head>
 <meta charset="UTF-8">
 <title>온라인 시험 | 응시</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#btn').click(function(){
+			let checkbox = document.getElementsByName("answer");
+			
+			for(let i = 0; i < checkbox.length; i+=4){
+				let count = 0;	// 문제마다 카운트 초기화
+				
+				for(let j = i; j < i+4; j++){
+					console.log(checkbox[j]);
+					if(checkbox[j].checked){	// 문제당 보기에 체크되어 있으면
+						count++;				// count++
+					}
+				}
+				
+				if(count != 1){	// 1문제당 보기를 모두 돌았는데 정답을 1개 선택하지 않았다면
+					alert('문제당 1개의 정답을 선택해 주세요');
+					return;
+				}
+			}
+			
+			$('#form').submit();
+		});
+	});
+</script>
 </head>
 <body>
  	<div>
@@ -42,11 +68,7 @@
 				</tr>
 			</c:forEach>
 	 	</table>
-		<button type="submit">답안지 제출</button>
+		<button type="button" id="btn">답안지 제출</button>
 	</form>
-	
-	<script>
-		// 유효성 검사: 체크된 길이가 20이 아니면(=답변을 20개 등록하지 않았다면) 돌려보내기
-	</script>
 </body>
 </html>

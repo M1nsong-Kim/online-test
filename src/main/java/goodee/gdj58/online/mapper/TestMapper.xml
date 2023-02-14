@@ -154,7 +154,7 @@
 				, test_title testTitle
 				, test_date testDate
 		FROM test
-		ORDER BY test_date DESC
+		ORDER BY test_date DESC, test_no DESC 
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 </mapper>

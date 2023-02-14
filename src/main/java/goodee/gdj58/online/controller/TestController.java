@@ -262,6 +262,7 @@ public class TestController {
 			, @RequestParam(value="exampleOX") String[] exampleOX) {
 		int testNo = testService.addTest(test);
 		question.setTestNo(testNo);
+		question.setQuestionIdx(1);	// 시험 등록할 때 무조건 1번 문제로
 		int questionNo = testService.addQuestion(question);
 		log.debug("\u001B[31m"+"★★★★★★★★questionNo★★★★★★★★★"+questionNo+"★★★★★★★★★★★★★★★★★★★★★★★★★★★★");	
 		int row = 0;

@@ -4,7 +4,27 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>온라인 시험 | 시험명 변경</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>	
+	$(document).ready(function(){
+		let allCheck = false;
+		
+		let testTitle = $('#testTitle');
+		
+		$('#btn').click(function(){
+			if(testTitle.val().length < 1 || testTitle.val().trim() == ''){
+				alert('시험명을 입력해 주세요');
+			}else {
+				allCheck = true;
+			}
+			// 폼 제출
+			if(allCheck){
+				$('#form').submit();
+			}
+		});
+	});
+</script>
 </head>
 <body>
 	<h1>문제 수정</h1>
@@ -14,10 +34,10 @@
 		<table>
 			<tr>
 				<td>시험명</td>
-				<td><input type="text" name="testTitle" value="${testTitle}"></td>
+				<td><input type="text" name="testTitle" value="${testTitle}" id="testTitle"></td>
 			</tr>
 		</table>
-		<button type="submit" id="btn">수정</button>
+		<button type="button" id="btn">수정</button>
 	</form>
 </body>
 </html>
