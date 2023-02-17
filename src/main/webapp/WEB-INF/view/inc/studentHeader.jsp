@@ -38,7 +38,7 @@
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-person"></i>
-            <span class="d-none d-md-block dropdown-toggle ps-2">${loginTeacher.teacherName}님</span>
+            <span class="d-none d-md-block dropdown-toggle ps-2">${loginStudent.studentName}님</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -93,7 +93,7 @@
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="${pageContext.request.contextPath}/teacher/">
+            <a href="${pageContext.request.contextPath}/student/">
               <i class="bi bi-circle"></i><span>내 프로필</span>
             </a>
           </li>

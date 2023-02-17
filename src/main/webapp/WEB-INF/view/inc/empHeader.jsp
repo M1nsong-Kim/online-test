@@ -11,7 +11,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="${pageContext.request.contextPath}/loginEmp" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="">
         <span class="d-none d-lg-block">LMS</span>
       </a>
@@ -86,7 +86,7 @@
         </a>
       </li>
 
-	  <!-- 직원 -->
+	  <!-- 마이페이지 -->
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>내 정보</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -104,6 +104,25 @@
           </li>
         </ul>
       </li>
+      
+      <!-- 직원 -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-layout-text-window-reverse"></i><span>직원</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="${pageContext.request.contextPath}/employee/empList">
+              <i class="bi bi-circle"></i><span>직원 목록</span>
+            </a>
+          </li>
+          <li>
+            <a href="${pageContext.request.contextPath}/employee/addEmp">
+              <i class="bi bi-circle"></i><span>직원 등록</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Tables Nav -->
       
 	  <!-- 강사 -->      
       <li class="nav-item">
