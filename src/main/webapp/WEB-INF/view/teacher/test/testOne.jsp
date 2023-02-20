@@ -33,6 +33,7 @@
 		<div class="card container">
             <div class="card-body">
               <h5 class="card-title">${testList.get(0).get("testTitle")}</h5>
+              <div>${errorMsg}</div>
               <div class="d-flex justify-content-end">
 				 <a href="${pageContext.request.contextPath}/teacher/test/addQuestion?testNo=${testList.get(0).get('testNo')}">문제추가</a>
               </div>
