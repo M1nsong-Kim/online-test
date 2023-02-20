@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>lMS | 강사 비밀번호 변경</title>
+<title>LMS | 강사 비밀번호 변경</title>
 <meta content="" name="description">
 <meta content="" name="keywords">
 	<!-- Google Fonts -->
@@ -51,7 +51,7 @@
 <body>
 	<!-- header -->
 	<div>
-		<c:import url="/WEB-INF/view/inc/empHeader.jsp"></c:import>
+		<c:import url="/WEB-INF/view/inc/teacherHeader.jsp"></c:import>
 	</div>
 	
 	<main id="main" class="main">
