@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>온라인 시험 | 직원 비밀번호 변경</title>
+<title>LMS | 직원 비밀번호 변경</title>
 <meta content="" name="description">
 <meta content="" name="keywords">
 	<!-- Google Fonts -->
@@ -53,24 +53,62 @@
 	<div>
 		<c:import url="/WEB-INF/view/inc/empHeader.jsp"></c:import>
 	</div>
+	
+	<main id="main" class="main">
+		<div class="row justify-content-center">
+			<div class="col-lg-8">
+				<div class="card">
+		            <div class="card-body">
+		              <h5 class="card-title">비밀번호 변경</h5>
+					  <div>${errorMsg}</div>
+		              <form method="post" action="${pageContext.request.contextPath}/employee/modifyEmpPw" id="form" class="my-5">
+		                <div class="row mb-3">
+		                  <label for="inputEmail3" class="col-sm-2 col-form-label">현재 비밀번호</label>
+		                  <div class="col-sm-10">
+		                    <input type="password" name="oldPw" id="oldPw" class="form-control">
+		                  </div>
+		                </div>
+		                <div class="row mb-3">
+		                  <label for="inputEmail3" class="col-sm-2 col-form-label">새 비밀번호</label>
+		                  <div class="col-sm-10">
+		                    <input type="password" name="newPw" id="newPw" class="form-control">
+		                  </div>
+		                </div>
+		                <div class="row mb-3">
+		                  <label for="inputPassword3" class="col-sm-2 col-form-label">새 비밀번호 확인</label>
+		                  <div class="col-sm-10">
+		                    <input type="password" name="newPwCk" id="newPwCk" class="form-control">
+		                  </div>
+		                </div>
+		                <div class="text-center">
+							<button type="button" id="btn" class="btn btn-primary">수정</button>
+		                </div>
+		              </form><!-- End Horizontal Form -->
 
- 	<h1>${loginEmp.empName} 님 비밀번호 수정</h1>
- 	<form method="post" action="${pageContext.request.contextPath}/employee/modifyEmpPw" id="form">
- 		<table>
- 			<tr>
- 				<td>현재 비밀번호</td>
- 				<td><input type="password" name="oldPw" id="oldPw"></td>
- 			</tr>
- 			<tr>
- 				<td>새 비밀번호</td>
- 				<td><input type="password" name="newPw" id="newPw"></td>
- 			</tr>
- 			<tr>
- 				<td>새 비밀번호 확인</td>
- 				<td><input type="password" name="newPwCk" id="newPwCk"></td>
- 			</tr>
- 		</table>
- 		<button type="button" id="btn">수정</button>
- 	</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+ 	
+ 	<!-- footer -->
+	<div>
+		<jsp:include page="/WEB-INF/view/inc/footer.jsp"></jsp:include>
+	</div>
+	
+	  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="${pageContext.request.contextPath}/assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="${pageContext.request.contextPath}/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="${pageContext.request.contextPath}/assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="${pageContext.request.contextPath}/assets/vendor/echarts/echarts.min.js"></script>
+  <script src="${pageContext.request.contextPath}/assets/vendor/quill/quill.min.js"></script>
+  <script src="${pageContext.request.contextPath}/assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="${pageContext.request.contextPath}/assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="${pageContext.request.contextPath}/assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="${pageContext.request.contextPath}/assets/js/main.js"></script>
 </body>
 </html>
