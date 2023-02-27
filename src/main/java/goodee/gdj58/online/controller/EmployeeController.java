@@ -41,6 +41,15 @@ public class EmployeeController {
 	
 	// 로그인 후에 사용한 기능
 	
+	// 프로필 보기
+	@GetMapping("/employee/empProfile")
+	public String selectEmp(HttpSession session, Model model) {
+		int empNo = ((Employee)session.getAttribute("loginEmp")).getEmpNo();
+		Employee emp = employeeService.getEmployee(empNo);
+		model.addAttribute("emp", emp);
+		return "employee/empProfile";
+	}
+	
 	// pw 수정
 	@GetMapping("/employee/modifyEmpPw")
 	public String modifyEmpPw() {

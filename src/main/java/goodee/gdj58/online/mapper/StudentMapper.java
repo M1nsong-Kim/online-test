@@ -9,6 +9,7 @@ import goodee.gdj58.online.vo.Student;
 
 @Mapper
 public interface StudentMapper {
+	Student selectStudent(int studentNo);
 	int updateStudentPw(Map<String, Object> paramMap);	// 매개변수 하나만 가능
 	Student login(Student student);
 	int selectStudentCount(String searchWord);

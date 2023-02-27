@@ -17,6 +17,11 @@ public class StudentService {
 	@Autowired StudentMapper studentMapper;
 	
 	// 1. 학생 기능
+	// 프로필
+	public Student getStudent(int studentNo) {
+		return studentMapper.selectStudent(studentNo);
+	}
+	
 	// 로그인
 	public Student login(Student student) {
 		return studentMapper.login(student);

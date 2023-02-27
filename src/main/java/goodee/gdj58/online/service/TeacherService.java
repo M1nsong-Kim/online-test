@@ -17,6 +17,11 @@ public class TeacherService {
 	@Autowired TeacherMapper teacherMapper;
 	
 	// 1. 선생님 기능
+	// 프로필
+	public Teacher getTeacher(int teacherNo) {
+		return teacherMapper.selectTeacher(teacherNo);
+	}
+	
 	// 로그인
 	public Teacher login(Teacher teacher) {
 		return teacherMapper.login(teacher);

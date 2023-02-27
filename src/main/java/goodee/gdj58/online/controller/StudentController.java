@@ -19,6 +19,15 @@ public class StudentController {
 	@Autowired StudentService studentService;
 	
 	// 1. 학생 기능
+	// 프로필 보기
+	@GetMapping("/student/studentProfile")
+	public String selectEmp(HttpSession session, Model model) {
+		int studentNo = ((Student)session.getAttribute("loginStudent")).getStudentNo();
+		Student student = studentService.getStudent(studentNo);
+		model.addAttribute("student", student);
+		return "student/studentProfile";
+	}
+	
 	// 비밀번호 수정
 	@GetMapping("/student/modifyStudentPw")
 	public String modifyStudentPw() {

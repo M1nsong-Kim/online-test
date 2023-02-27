@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="goodee.gdj58.online.mapper.EmployeeMapper">
+	<!-- resultType="Integer" 이런 식으로 적지 말기(오류남) -->
+	<select id="selectEmployee" resultType="goodee.gdj58.online.vo.Employee" parameterType="int">
+		SELECT emp_id empId
+				, emp_name empName
+		FROM employee
+		WHERE emp_no = #{empNo}
+	</select>
+
 	<!-- 사원 목록 총 개수 -->
 	<select id="selectEmpCount" resultType="int">
 		SELECT COUNT(*)

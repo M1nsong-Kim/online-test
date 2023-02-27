@@ -9,6 +9,7 @@ import goodee.gdj58.online.vo.Employee;
 
 @Mapper
 public interface EmployeeMapper {
+	Employee selectEmployee(int empNo);
 	int selectEmpCount(String searchWord);
 	int updateEmployeePw(Map<String, Object> paramMap);	// myBatis는 매개변수 하나만 가능
 	Employee login(Employee employee);

@@ -19,6 +19,10 @@ public class EmployeeService {
 	@Autowired	// bean 안에 employeeMapper 타입에 들어갈 수 있는 게 있는지 스캔 후 주입
 	private EmployeeMapper employeeMapper;
 
+	public Employee getEmployee(int empNo) {
+		return employeeMapper.selectEmployee(empNo);
+	}
+	
 	public int getEmpCount(String searchWord) {
 		return employeeMapper.selectEmpCount(searchWord);
 	}

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import goodee.gdj58.online.service.TeacherService;
 import goodee.gdj58.online.service.TestService;
+import goodee.gdj58.online.vo.Student;
 import goodee.gdj58.online.vo.Teacher;
 
 @Controller
@@ -21,7 +22,14 @@ public class TeacherController {
 	@Autowired TestService testService;
 	
 	// 1. 선생님 기능
-	// 시험은 Test 따로
+	// 프로필
+	@GetMapping("/teacher/teacherProfile")
+	public String selectEmp(HttpSession session, Model model) {
+		int teacherNo = ((Teacher)session.getAttribute("loginTeacher")).getTeacherNo();
+		Teacher teacher = teacherService.getTeacher(teacherNo);
+		model.addAttribute("teacher", teacher);
+		return "teacher/teacherProfile";
+	}
 	
 	// 비밀번호 수정
 	@GetMapping("/teacher/modifyTeacherPw")
