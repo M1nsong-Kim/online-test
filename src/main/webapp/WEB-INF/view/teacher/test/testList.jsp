@@ -44,16 +44,18 @@
 						<th class="col-2">시험번호</th>
 						<th class="col-5">시험명</th>
 						<th class="col-2">실시일자</th>
-						<th class="col-2">수정</th>
-						<th class="col-2">삭제</th>
+						<th class="col-1">수정</th>
+						<th class="col-1">삭제</th>
+						<th class="col-2">응시가능여부</th>
 					</tr>
 					<c:forEach var="t" items="${list}">	
 						<tr class="d-flex">
 							<td class="col-2">${t.testNo}</td>
 							<td class="col-5"><a href="${pageContext.request.contextPath}/teacher/test/testOne?testNo=${t.testNo}">${t.testTitle}</a></td>
 							<td class="col-2">${t.testDate}</td>
-							<td class="col-2"><a href="${pageContext.request.contextPath}/teacher/test/modifyTest?testNo=${t.testNo}">수정</a></td>
-							<td class="col-2"><a href="${pageContext.request.contextPath}/teacher/test/removeTest?testNo=${t.testNo}">삭제</a></td>
+							<td class="col-1"><a href="${pageContext.request.contextPath}/teacher/test/modifyTest?testNo=${t.testNo}">수정</a></td>
+							<td class="col-1"><a href="${pageContext.request.contextPath}/teacher/test/removeTest?testNo=${t.testNo}">삭제</a></td>
+							<td class="col-1 text-center"><input type="checkbox" <c:if test="${t.testActive eq '응시가능'}">checked</c:if>></td>
 						</tr>
 					</c:forEach>
 				</table>

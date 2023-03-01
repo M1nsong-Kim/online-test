@@ -45,25 +45,27 @@
               		</thead>
               		<tbody>
 						<c:forEach var="t" items="${list}">	
-							<tr class="d-flex">
-								<td class="col-2 text-center">${t.testNo}</td>
-								<td class="col-6">${t.testTitle}</td>
-								<td class="col-2">${t.testDate}</td>
-								<td class="col-2">
-									<c:if test="${!takenTestList.isEmpty()}">
-										<c:if test="${!takenTestList.contains(t.testNo)}">
+							<c:if test="${t.testActive eq '응시가능'}">
+								<tr class="d-flex">
+									<td class="col-2 text-center">${t.testNo}</td>
+									<td class="col-6">${t.testTitle}</td>
+									<td class="col-2">${t.testDate}</td>
+									<td class="col-2">
+										<c:if test="${!takenTestList.isEmpty()}">
+											<c:if test="${!takenTestList.contains(t.testNo)}">
+												<a href="${pageContext.request.contextPath}/student/test/testOne?testNo=${t.testNo}">응시</a>
+											</c:if>
+											<c:if test="${takenTestList.contains(t.testNo)}">
+													<a href="${pageContext.request.contextPath}/student/test/testPaper?testNo=${t.testNo}">답안확인</a>
+											</c:if>
+										</c:if>
+										<!-- paper 테이블이 비어 있는 초기 상태 고려 -->
+										<c:if test="${takenTestList.isEmpty()}">
 											<a href="${pageContext.request.contextPath}/student/test/testOne?testNo=${t.testNo}">응시</a>
 										</c:if>
-										<c:if test="${takenTestList.contains(t.testNo)}">
-												<a href="${pageContext.request.contextPath}/student/test/testPaper?testNo=${t.testNo}">답안확인</a>
-										</c:if>
-									</c:if>
-									<!-- paper 테이블이 비어 있는 초기 상태 고려 -->
-									<c:if test="${takenTestList.isEmpty()}">
-										<a href="${pageContext.request.contextPath}/student/test/testOne?testNo=${t.testNo}">응시</a>
-									</c:if>
-								</td>
-							</tr>
+									</td>
+								</tr>
+							</c:if>
 						</c:forEach>
               		</tbody>
 				</table>

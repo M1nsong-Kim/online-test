@@ -22,6 +22,23 @@
 	
 	<!-- Template Main CSS File -->
 	<link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+		let idCheck = false;
+		let allCheck = false;
+
+		// 문제 개수 확인
+		$('#btn').click(function(){
+			if($('#questionCount').val() == 20){
+				$('#form').submit();
+			}else {
+				alert('한 시험당 문제 20개가 되어야 응시 가능 여부 수정이 가능합니다.');
+			}
+		});
+		
+	});
+</script>
 </head>
 <body>
 	<!-- header -->
@@ -32,11 +49,13 @@
 	<main id="main" class="main">
 		<div class="card container">
             <div class="card-body">
-              <h5 class="card-title">${testList.get(0).get("testTitle")}</h5>
+              <h5 class="card-title">${testTitle}</h5>
               <div>${errorMsg}</div>
               <div class="d-flex justify-content-end">
 				 <a href="${pageContext.request.contextPath}/teacher/test/addQuestion?testNo=${testList.get(0).get('testNo')}">문제추가</a>
               </div>
+
+             <input type="hidden" id="questionCount" value="${questionCount}">
               <!-- Active Table -->
               <div class="my-1">
               	<table class="table table-borderless">
@@ -93,6 +112,19 @@
               		</tbody>
 			 	</table>
 			 </div>
+			 <form method="post" action="${pageContext.request.contextPath}/teacher/test/modifyTest" id="form" class="my-1">
+              	 <!-- test 요소 -->
+	             <input type="hidden" name="testNo" value="${testNo}">
+	             <input type="hidden" name="testTitle" value="${testTitle}">
+	             <c:if test="${testActive eq '응시가능'}">
+	             	<input type="hidden" name="testActive" value="응시불가">
+	             </c:if>
+	             <c:if test="${testActive eq '응시불가'}">
+	             	<input type="hidden" name="testActive" value="응시가능">
+	             </c:if>
+              	<p>현재 상태 : ${testActive}</p>
+              	<button type="button" class="btn btn-primary" id="btn">응시여부전환</button>
+              </form>
 			</div>
 		</div>
 	</main>

@@ -46,6 +46,7 @@
 	<update id="updateTest" parameterType="goodee.gdj58.online.vo.Test">
 		UPDATE test
 		SET test_title = #{testTitle}
+			, test_active = #{testActive}
 		WHERE test_no = #{testNo}
 	</update>
 
@@ -126,8 +127,10 @@
 	<select id="selectTestOne" resultType="java.util.Map" parameterType="int">
 		SELECT 
 			t.test_title testTitle
-			,q.question_no questionNo
 			, t.test_no testNo
+			, t.test_date testDate
+			, t.test_active testActive
+			,q.question_no questionNo
 			, q.question_idx questionIdx
 			, q.question_title questionTitle
 		FROM question q INNER JOIN test t 
@@ -153,6 +156,7 @@
 		SELECT test_no testNo
 				, test_title testTitle
 				, test_date testDate
+				, test_active testActive
 		FROM test
 		ORDER BY test_date DESC, test_no DESC 
 		LIMIT #{beginRow}, #{rowPerPage}

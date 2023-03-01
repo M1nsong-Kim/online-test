@@ -29,7 +29,7 @@ public class EmployeeController {
 	public String loginEmp(HttpSession session, Employee emp) {
 		Employee resultEmp = employeeService.login(emp);
 		session.setAttribute("loginEmp", resultEmp);
-		return "redirect:/employee/empList";	// sendRedirect, CM -> C
+		return "redirect:/loginEmp";	// sendRedirect, CM -> C
 	}
 	
 	// 로그아웃

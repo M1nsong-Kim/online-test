@@ -126,17 +126,20 @@ public class TestController {
 	}
 	
 	
-	// 2. 선생님
+	// 2. 강사
 		// 시험 수정
 	@GetMapping("teacher/test/modifyTest")
 	public String modifyTest(Model model, int testNo) {
 		String testTitle = (String)testService.getTestOne(testNo).get(0).get("testTitle");
+		String testActive = (String)testService.getTestOne(testNo).get(0).get("testActive");
 		model.addAttribute("testTitle", testTitle);
+		model.addAttribute("testActive", testActive);
 		model.addAttribute("testNo", testNo);
 		return "teacher/test/modifyTest";
 	}
 	@PostMapping("teacher/test/modifyTest")
 	public String modifyTest(Model model, Test test) {
+		log.debug("\u001B[31m"+test);
 		int row = testService.modifyTest(test);
 		if(row == 0) {
 			model.addAttribute("errorMsg", "시스템 에러로 등록 실패");
@@ -240,7 +243,13 @@ public class TestController {
 				}
 			}
 		}
-		
+		String testTitle = (String)testService.getTestOne(testNo).get(0).get("testTitle");
+		String testActive = (String)testService.getTestOne(testNo).get(0).get("testActive");
+	
+		model.addAttribute("testTitle", testTitle);
+		model.addAttribute("testActive", testActive);
+		model.addAttribute("testNo", testNo);
+		model.addAttribute("questionCount", testService.getQuestionCountByTest(testNo));
 		model.addAttribute("testList", testList);
 		model.addAttribute("exList", exList);
 		// 다른 방법
@@ -248,6 +257,8 @@ public class TestController {
 //		model.addAttribute("exList", exList);
 		return "teacher/test/testOne";
 	}
+	
+	
 		// 시험 등록
 	@GetMapping("teacher/test/addTest")
 	public String addTest() {

@@ -21,10 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 public class OnlineTestRestController {
 	@Autowired TestService testService;
 	@Autowired IdService idService;
-	
-	// 비밀번호 일치 확인
-	
-	// 직원 아이디 중복 확인
+
+	// 아이디 중복 확인
 	@GetMapping("/idCheck")
 	public String idCheckEmp(@RequestParam(value = "empId", required = false) String empId
 							, @RequestParam(value = "teacherId", required = false) String teacherId

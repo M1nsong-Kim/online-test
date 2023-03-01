@@ -58,6 +58,7 @@
 					  <div>${errorMsg}</div>
 		              <form method="post" action="${pageContext.request.contextPath}/teacher/test/modifyTest" id="form" class="my-5">
 		              	<input type="hidden" name="testNo" value="${testNo}">
+		              	<input type="hidden" name="testActive" value="${testActive}">
 		                <div class="row mb-3">
 		                  <label for="inputEmail3" class="col-sm-2 col-form-label">시험명</label>
 		                  <div class="col-sm-10">
