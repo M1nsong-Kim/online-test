@@ -87,7 +87,6 @@
 		              <div>1번 문제와 함께 시험을 등록할 수 있습니다.</div>
 					  <div>${errorMsg}</div>
 		              <form method="post" action="${pageContext.request.contextPath}/teacher/test/addTest" id="form" class="my-5">
-		              	<input type="hidden" name="testNo" value="${testNo}">
 		                <div class="row mb-3">
 		                  <label for="inputEmail3" class="col-sm-2 col-form-label">시험명</label>
 		                  <div class="col-sm-10">
