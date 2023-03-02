@@ -89,13 +89,13 @@
 	                    <div class="col-12">
 	                      <label for="yourUsername" class="form-label">아이디</label>
 	                      <div class="input-group has-validation">
-	                        <input type="text" name="teacherId" id="teacherId" class="form-control">
+	                        <input type="text" name="teacherId" id="teacherId" class="form-control" value="t1">
 	                      </div>
 	                    </div>
 	
 	                    <div class="col-12">
 	                      <label for="yourPassword" class="form-label">비밀번호</label>
-	                      <input type="password" name="teacherPw" id="teacherPw" class="form-control">
+	                      <input type="password" name="teacherPw" id="teacherPw" class="form-control" value="1234">
 	                    </div>
 	
 	                    <div class="col-12">

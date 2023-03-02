@@ -68,7 +68,7 @@
 
 				<!-- 검색 -->
 				<div class="d-flex justify-content-end">
-					<form method="get" action="${pageContext.request.contextPath}/employee/teacher/teacherList"" class="search-form d-flex align-items-center" id="form">
+					<form method="get" action="${pageContext.request.contextPath}/employee/teacher/teacherList" class="search-form d-flex align-items-center" id="form">
 						<input type="text" name="searchWord" placeholder="강사 이름 검색" class="form-control">
 						<button type="button" id="btn" class="btn btn-primary btn-sm w-25">검색</button>
 					</form>
