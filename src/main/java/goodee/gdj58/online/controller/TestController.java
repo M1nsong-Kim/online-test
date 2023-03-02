@@ -189,7 +189,11 @@ public class TestController {
 	@GetMapping("teacher/test/addQuestion")
 	public String addQuestion(Model model, int testNo) {
 		model.addAttribute("testNo", testNo);
-		model.addAttribute("questionCount", testService.getQuestionCountByTest(testNo));
+		int questionCount = testService.getQuestionCountByTest(testNo);
+		model.addAttribute("questionCount", questionCount);
+		if(questionCount == 20) {	// 문제 20개 --> 더 이상 등록 불가
+			return "redirect:/teacher/test/testOne?testNo="+testNo;
+		}
 		return "teacher/test/addQuestion";
 	}
 	@PostMapping("teacher/test/addQuestion")
