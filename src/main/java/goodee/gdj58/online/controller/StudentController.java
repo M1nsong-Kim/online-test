@@ -48,7 +48,7 @@ public class StudentController {
 	public String loginStudent(HttpSession session, Student student) {
 		Student resultStudent = studentService.login(student);
 		session.setAttribute("loginStudent", resultStudent);
-		return "redirect:/loginStudent";	// sendRedirect, CM -> C
+		return "redirect:/student/test/testScore";	// sendRedirect, CM -> C
 	}
 	// 로그아웃
 	@GetMapping("/student/logout")

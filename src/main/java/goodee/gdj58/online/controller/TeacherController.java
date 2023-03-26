@@ -50,7 +50,7 @@ public class TeacherController {
 	public String loginTeacher(HttpSession session, Teacher teacher) {
 		Teacher resultTeacher = teacherService.login(teacher);
 		session.setAttribute("loginTeacher", resultTeacher);
-		return "redirect:/loginTeacher";	// sendRedirect, CM -> C
+		return "redirect:/teacher/test/testList";	// sendRedirect, CM -> C
 	}
 	// 로그아웃
 	@GetMapping("/teacher/logout")
