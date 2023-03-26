@@ -69,19 +69,18 @@
               	<table class="table table-borderless">
               		<thead>
 	              		<tr class="d-flex">
-				 			<th class="col-2 text-center">문제번호</th>
-				 			<th colspan="4">문제</th>
+				 			<th class="col-1">문제번호</th>
+				 			<th class="col-9" colspan="4">문제</th>
 				 		</tr>
 				 	</thead>
 				 	<tbody>
 				 		<c:forEach var="t" items="${testList}">	
 				 			<input type="hidden" name="questionNo" value="${t.questionNo}">
-							<tr class="d-flex my-4">
-								<td class="col-2 text-center">${t.questionIdx}</td>
-								<td colspan="4">${t.questionTitle}</td>
+							<tr class="d-flex">
+								<td class="col-1">${t.questionIdx}</td>
+								<td colspan="4" class="col-9">${t.questionTitle}</td>
 							</tr>
-							<tr class="d-flex my-4">
-								<td class="col-2"></td>
+							<tr class="d-flex">
 								<td class="col-3">
 									<input type="checkbox" name="answer" value="${t.exIdx0}" class="form-check-input">${t.exIdx0}. ${t.exTitle0}
 								</td>
@@ -94,6 +93,9 @@
 								<td class="col-3">
 									<input type="checkbox" name="answer" value="${t.exIdx3}" class="form-check-input">${t.exIdx3}. ${t.exTitle3}
 								</td>
+							</tr>
+							<tr>
+								<td><hr></td>
 							</tr>
 						</c:forEach>
 				 	</tbody>
